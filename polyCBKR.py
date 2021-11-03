@@ -87,16 +87,19 @@ def polyCBKRFunc(folderIn, folderOut, fileXLSX, fileIn):
             n5a = n5 + 'E'
     elif (n5 == 'W'):
             n5a = n5 + 'W'
-    nL = n1 + '_' + n2 + '_' + n3 + '_' + n4 + '_' + n5a
 
     if ((n3 == '2-S') or (n3 == '2S')):
             kp1 = '2S'
+            n3a = '2-S'
     elif (n3 == 'PSP'):
             kp1 = 'PSP'
+            n3a = 'PSP'
     elif (n3 == 'PSS'):
             kp1 = 'PSS'
+            n3a = 'PSS'
     kp = kp1 + ' Halfmoon ' + n5
-
+    nL = n1 + '_' + n2 + '_' + n3a + '_' + n4 + '_' + n5a
+    
     n7 = fileIn.split('_')[7]
     if (n7 == 'L'):
             pos = 'Left'

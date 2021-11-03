@@ -26,7 +26,9 @@ from datetime import datetime, timedelta
 import openpyxl
 from pathlib import Path
 
-def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
+
+def BulkCrossFunc(folderIn, folderOut, fileXLSX, fileIn):
+
 
     fileName = fileIn.split('.')[0]
     fileNew = fileName + '_new.txt'
@@ -97,7 +99,7 @@ def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
             n3a = 'PSS'
     kp = kp1 + ' Halfmoon ' + n5
     nL = n1 + '_' + n2 + '_' + n3a + '_' + n4 + '_' + n5a
-    
+
     n7 = fileIn.split('_')[7]
     if (n7 == 'L'):
             pos = 'Left'
@@ -119,8 +121,10 @@ def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
             flutePos = '4'
             
     n8 = fileIn.split('_')[8]
-    if (n8 == 'MetalCover'):
-            struct = 'CLOVER_METAL'
+    n9 = fileIn.split('_')[9]
+    n10 = fileIn.split('_')[10]
+    if (n8 == 'BulckCross'):
+            struct = 'VDP_BULK'
             waitTime = '0.200'
             extTabNam = 'TEST_SENSOR_IV'
             extTabNam2 = 'HALFMOON_IV_PAR'
@@ -160,7 +164,7 @@ def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
     kindOfHMStructID = ET.SubElement(data, "KIND_OF_HM_STRUCT_ID").text = struct
     kindOfHMConfigID = ET.SubElement(data, "KIND_OF_HM_CONFIG_ID").text = "Standard"
 
-    procedureType = ET.SubElement(data, "PROCEDURE_TYPE").text = 'VdP-metalClover'
+    procedureType = ET.SubElement(data, "PROCEDURE_TYPE").text = 'Meander'
     fileName = ET.SubElement(data, "FILE_NAME").text = fileIn
     equipment = ET.SubElement(data, "EQUIPMENT").text = "PQC_HM_POSITION " + flutePos
     waitingTimeS = ET.SubElement(data, "WAITING_TIME_S").text = waitTime
@@ -191,8 +195,6 @@ def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
             airTemperature = str(airTemperatureNum)
             RHNum = RHArr[i]
             RH = str(RHNum)
-
-
             datetime_new = datetime_new + time_delta
             data2 = ET.SubElement(dataset2, "DATA")
             time = ET.SubElement(data2, "TIME").text = str(datetime_new)
@@ -201,7 +203,6 @@ def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
             tempDegC = ET.SubElement(data2, "TEMP_DEGC").text = temperature
             airTempDegC = ET.SubElement(data2, "AIR_TEMP_DEGC").text = airTemperature
             RHPrcnt = ET.SubElement(data2, "RH_PRCNT").text = RH
-
 
     childDataSet2 = ET.SubElement(dataset2, "CHILD_DATA_SET")
     header3 = ET.SubElement(childDataSet2, "HEADER")
@@ -218,9 +219,16 @@ def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
 
     wb_obj = openpyxl.load_workbook(folderIn/fileXLSX) 
     sheet = wb_obj.active
-    Res = sheet["B17"].value
-    RshOhmsqr = ET.SubElement(data3, "RSH_OHMSQR").text = str(Res)
+    Rsh = (float(ROhm_value))*4.53235882651
+    Rsh = round(Rsh, 3)
+    RshOhmsqr = ET.SubElement(data3, "RSH_OHMSQR").text = str(Rsh)
     ROhm = ET.SubElement(data3, "R_OHM").text = ROhm_value
+    Rho = 290*(1E-6)*290*(1E-6)/(10*2*8.854*(1E-12)*11.68*483.78*(1E-4)*(sheet["B16"].value))
+    Rho = round(Rho, 3)
+    RhoKohmcm = ET.SubElement(data3, "RHO_KOHMCM").text = str(Rho)
+
+
+
 
     dom = xml.dom.minidom.parseString(ET.tostring(root))
     xml_string = dom.toprettyxml()
@@ -232,7 +240,7 @@ def MetalCloverFunc(folderIn, folderOut, fileXLSX, fileIn):
     with open(folderOut/fileOut, 'w') as fout1:
             fout1.write(part1 + ' encoding=\"{}\"'.format(m_encoding) + ' standalone=\"{}\"?>\n'.format(m_standalone)  + part2)
             fout1.close()
-
+            
     os.remove(folderIn/fileNew)
 
     return(folderOut/fileOut)
