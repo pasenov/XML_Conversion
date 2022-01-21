@@ -82,12 +82,15 @@ def FETFunc(folderIn, folderOut, fileXLSX, fileIn):
     if ((n3 == '2-S') or (n3 == '2S')):
             kp1 = '2S'
             n3a = '2-S'
+            n3b = '2S'
     elif (n3 == 'PSP'):
             kp1 = 'PS-p'
             n3a = 'PSP'
+            n3b = 'PSP'
     elif (n3 == 'PSS'):
             kp1 = 'PS-s'
             n3a = 'PSS'
+            n3b = 'PSS'
     kp = kp1 + ' Halfmoon ' + n5
     nL = n1 + '_' + n2 + '_' + n3a + '_' + n4 + '_' + n5a
 
@@ -113,7 +116,7 @@ def FETFunc(folderIn, folderOut, fileXLSX, fileIn):
         
     n8 = fileIn.split('_')[8]
     if (n8 == 'FET'):
-        struct = 'FET' + '_' + n3a
+        struct = 'FET' + '_' + n3b
         waitTime = '0.500'
         extTabNam = 'TEST_SENSOR_IV'
         extTabNam2 = 'HALFMOON_TC_PAR'
