@@ -86,7 +86,7 @@ def FETFunc(folderIn, folderOut, fileXLSX, fileIn):
     elif (n3 == 'PSP'):
             kp1 = 'PS-p'
             n3a = 'PSP'
-            n3b = 'PSP'
+            n3b = 'PSS'
     elif (n3 == 'PSS'):
             kp1 = 'PS-s'
             n3a = 'PSS'
