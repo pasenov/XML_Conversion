@@ -223,7 +223,8 @@ def BulkCrossFunc(folderIn, folderOut, fileXLSX, fileIn):
     Rsh = round(Rsh, 3)
     RshOhmsqr = ET.SubElement(data3, "RSH_OHMSQR").text = str(Rsh)
     ROhm = ET.SubElement(data3, "R_OHM").text = ROhm_value
-    Rho = 290*(1E-6)*290*(1E-6)/(10*2*8.854*(1E-12)*11.68*483.78*(1E-4)*(sheet["B16"].value))
+    Rho = sheet["B14"].value
+    Rho = Rho/1000
     Rho = round(Rho, 3)
     RhoKohmcm = ET.SubElement(data3, "RHO_KOHMCM").text = str(Rho)
 
