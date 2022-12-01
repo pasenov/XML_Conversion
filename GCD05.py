@@ -206,7 +206,7 @@ def GCD05Func(folderIn, folderOut, fileXLSX, fileIn):
     Isurf = sheet["B22"].value
     Isurf = round(Isurf, 3)
     IsurfPampr = ET.SubElement(data3, "ISURF_PAMPR").text = str(Isurf)
-    s0 = (sheet["B22"].value)*0.000000000001/1.6E-019/5415000000/0.00505
+    s0 = (sheet["B22"].value)*0.000000000001/1.6E-019/5415000000/0.00723
     s0 = round(s0, 3)
     S0CmSec = ET.SubElement(data3, "S0_CMSEC").text = str(s0)
     VfbAcc = 5 + sheet["B23"].value
